@@ -16,3 +16,6 @@ Route::get('/', function () {
 });
 
 Route::any('/wechat', 'WechatController@serve');
+
+Route::resource('/user', 'UserController');
+Route::resource('/material', 'MaterialController');
