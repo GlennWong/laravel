@@ -11,44 +11,17 @@ class WechatController extends Controller
     {
 
         $wechat = app('wechat');
+        $server = $wechat->server;
+        $user = $wechat->user;
 
 
-        $wechat->server->setMessageHandler(function ($message) {
-            switch ($message->MsgType) {
-                case 'event':
-                    # 事件消息...
-                    break;
-                case 'text':
-                    # 文字消息...
-                    return 'false';
-                    // return $message->Content;
-                    break;
-                case 'image':
-                    # 图片消息...
-                    return $message->PicUrl;
-                    break;
-                case 'voice':
-                    # 语音消息...
-                    break;
-                case 'video':
-                    # 视频消息...
-                    break;
-                case 'location':
-                    # 坐标消息...
-                    break;
-                case 'link':
-                    # 链接消息...
-                    break;
-                // ... 其它消息
-                default:
-                    # code...
-                    // $return NULL;
-                    break;
-            }
+        $server->setMessageHandler(function ($message) use ($user) {
 
-            // ...
+            $fromUser = $user->get($message->FromUserName);
+
+            return "{$fromUser->nickname}";
         });
 
-        return $wechat->server->serve();
+        return $server->serve();
     }
 }
