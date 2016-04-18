@@ -19,3 +19,12 @@ Route::any('/wechat', 'WechatController@serve');
 
 Route::resource('/user', 'UserController');
 Route::resource('/material', 'MaterialController');
+Route::resource('/menu', 'MenuController');
+
+Route::group(['middleware' => ['wechat.oauth']], function () {
+    Route::get('/user', function () {
+        $user = session('wechat.oauth_user'); // 拿到授权用户资料
+
+        dd($user);
+    });
+});

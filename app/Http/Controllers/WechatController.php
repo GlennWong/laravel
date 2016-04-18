@@ -14,7 +14,6 @@ class WechatController extends Controller
         $server = $wechat->server;
         $user = $wechat->user;
 
-
         $server->setMessageHandler(function ($message) use ($user) {
 
             $fromUser = $user->get($message->FromUserName);
